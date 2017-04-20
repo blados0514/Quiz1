@@ -1,0 +1,20 @@
+--blaimir ospina cardona
+CREATE TABLESPACE big_tbs_blados DATAFILE
+'/u01/app/oracle/oradata/XE/datos1.dbf' size 1gb;
+
+CREATE TABLESPACE quiz DATAFILE
+'/u01/app/oracle/oradata/XE/datos2.dbf' size 200mb,
+'/u01/app/oracle/oradata/XE/datos3.dbf' size 200mb,
+'/u01/app/oracle/oradata/XE/datos4.dbf' size 200mb
+autoextend on next 600mb maxsize 1gb
+segment space management auto online;
+
+CREATE PROFILE DEVELOPMENT LIMIT
+SESSIONS_PER_USER UNLIMITED
+IDLE_TIME 15
+FAILED_LOGIN_ATTEMPTS UNLIMITED;
+
+CREATE USER USER_ONE
+IDENTIFIED BY USER1
+DEFAULT TABLESPACE quiz
+PROFILE DEVELOPMENT;
