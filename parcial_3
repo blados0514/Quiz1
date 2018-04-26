@@ -1,0 +1,87 @@
+
+create tablespace mid_term DATAFILE 
+'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\TS_PRUEBA_DATA.DBF' SIZE 25M;
+
+CREATE PROFILE examen LIMIT
+IDLE_TIME 10
+FAILED_LOGIN_ATTEMPTS 4;
+
+CREATE USER ejercicios 
+IDENTIFIED BY 1234
+PROFILE examen;
+
+GRANT CONNECT, DBA TO ejercicios;
+
+
+--------------------------------------------------------
+-- Archivo creado  - miércoles-abril-25-2018   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Function FT_FUNCION_1
+--------------------------------------------------------
+
+  CREATE OR REPLACE FUNCTION "EJERCICIOS"."FT_FUNCION_1" (a number, b number, c number) Return Varchar As
+
+lv_datos Varchar(255);
+
+Begin 
+  If b >=C Then 
+    lv_datos:= a||'/'||(a*b)||'/'||'Andres';
+  Else 
+    lv_datos:= 'martinez';
+  End If;
+  
+  Return lv_datos;
+  
+End ft_funcion_1;
+--------------------------------------------------------
+--  DDL for Function FT_FUNCION_2
+--------------------------------------------------------
+
+  CREATE OR REPLACE FUNCTION "EJERCICIOS"."FT_FUNCION_2" (a number,b varchar, c varchar) Return Varchar As
+r number:=0;
+m number:=0;
+n number:=0;
+rev number:=0;
+
+validar_caracteres number:=0;
+cantidad_de_vocales Number:=0;
+cantidad_consonantes number:=0;
+ninuscula varchar(255):='';
+mayuscula varchar(255):='';
+minus_mayus varchar2(255):='';
+
+
+Begin
+  m:=a;
+  
+ while a > 0
+    loop
+        r:=mod(a,10);
+        rev:=(rev*10)+r;
+        n:=trunc(a/10);
+    end loop;
+    
+    if m=rev Then -- es verdadero    
+              For j In 1..Length(b) Loop
+                     ninuscula:=lower(SubStr(c,j,1));
+              End Loop;
+               For j In 1..Length(b) Loop
+                     mayuscula:=Upper(SubStr(c,j,1));
+              End Loop;
+              For i In 1..Length(c) Loop
+                validar_caracteres:=Upper(SubStr(c,i,1));
+                  If validar_caracteres in ('A','E','I','O','U') Then
+                      cantidad_de_vocales:=cantidad_de_vocales +1;
+                  Else
+                     cantidad_de_vocales:=cantidad_consonantes + 1;
+                  End If;
+              End Loop;
+      
+          Return a||''||cantidad_de_vocales||length(a||b||c);
+      
+    Else  
+      Return '''';
+    End If;
+    
+End ft_funcion_2;
